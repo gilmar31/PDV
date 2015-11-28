@@ -4,4 +4,5 @@
     <string name="action_editar">Editar</string>
     <string name="title_activity_incluir_novo">IncluirNovoProduto</string>
     <string name="incluir_descricao">Descrição</string>
+    <string name="title_activity_editar">EditarProduto</string>
 </resources>

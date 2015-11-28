@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity {
         }
 
         if (id == R.id.action_editar) {
-            return true;
+            intent = new Intent(this, EditarActivity.class);
         }
         startActivity(intent);
         return super.onOptionsItemSelected(item);

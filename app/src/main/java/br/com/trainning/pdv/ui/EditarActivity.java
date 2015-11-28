@@ -7,10 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.trainning.pdv.R;
@@ -19,7 +22,7 @@ import butterknife.Bind;
 import se.emilsjolander.sprinkles.CursorList;
 import se.emilsjolander.sprinkles.Query;
 
-public class IncluirNovoActivity extends BaseActivity {
+public class EditarActivity extends BaseActivity {
 
     @Bind(R.id.editText_descricao)
     EditText descricao;
@@ -48,12 +51,36 @@ public class IncluirNovoActivity extends BaseActivity {
     @Bind(R.id.fab)
     FloatingActionButton fab;
 
+    @Bind(R.id.spinner)
+    Spinner spinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_incluir_novo);
+        setContentView(R.layout.activity_editar);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        List<String> barcodeList = new ArrayList<>();
+        List<Produto> produtoList;
+
+
+        CursorList cursor = Query.many(Produto.class, "select * from produto where ativo = 1").get();
+        produtoList = cursor.asList();
+
+        for(Produto produto: produtoList){
+            barcodeList.add(produto.getCodigoBarras());
+        }
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
+                (this, android.R.layout.simple_spinner_item,barcodeList);
+
+        dataAdapter.setDropDownViewResource
+                (android.R.layout.simple_spinner_dropdown_item);
+
+        spinner.setAdapter(dataAdapter);
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
